@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import FlatListNannies from './flatList';
+import FlatListNannies from '../components/flatList';
 
 const page = 'Search'
 export default function Search({ navigation }) {

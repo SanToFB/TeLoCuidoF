@@ -197,7 +197,7 @@ export default function Message({ navigation, route }) {
                         <Text
                             style={stylesPersonal.button}
                             onPress={() => sendMessage()}
-                        >Enviar</Text>
+                        >        Enviar </Text>
                     </TouchableOpacity>
                     <Button style={stylesPersonal.button}
                         onPress={() => navigation.goBack()}
@@ -220,13 +220,15 @@ export default function Message({ navigation, route }) {
 
 const stylesPersonal = StyleSheet.create({
     container: {
+        flex:1,
         alignItems: 'center',
+        alignContent:'center',
         justifyContent: 'center',
     },
     containerMsg: {
         marginTop: 8,
         padding: 10,
-        backgroundColor: "aliceblue", //aliceblue , beige
+        backgroundColor: "aliceblue", 
     },
     button: {
         elevation: 5,
@@ -236,30 +238,31 @@ const stylesPersonal = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 5,
         paddingHorizontal: 5,
+        marginLeft:5,
         alignContent: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#6495ed' //cornflowerblue 
+        backgroundColor: '#6495ed' 
     },
     button2:{
         elevation: 5,
-        minWidth: '35%',
+        minWidth: '30%',
         padding: 5,
         marginTop: 5,
         paddingVertical: 5,
-        paddingHorizontal: 5,
+        paddingHorizontal: 3,
         alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: '#008080',
         borderRadius:15
     },
     buttonContainer: {
-        elevation: 8,
-        minWidth: '35%',
+        elevation: 5,
+        minWidth: '30%',
         borderRadius: 5,
         paddingVertical: 5,
         paddingHorizontal: 5,
         margin: 5,
         alignItems: 'center',
+        alignContent:'center',
         justifyContent: 'center',
     },
     input: {

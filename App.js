@@ -6,7 +6,7 @@ import Message from './pages/message';
 import Profile from './pages/profile';
 import Login from './pages/login';
 import SignUp from './pages/signUp';
-import Search from './components/search'
+import Search from './pages/search'
 import DataProfile from './pages/dataProfile'
 import AsyncStorage from './services/asyncStorage';
 import FlatListNannies from './components/flatList';
