@@ -1,5 +1,5 @@
-import { useState, useContext, useRef, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity, FlatList } from "react-native";
+import { useState, useContext, useEffect } from "react";
+import { SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from "react-native";
 import GlobalContext from '../components/global/context';
 import FlatListMessages from '../components/FlatListMessages'
 
@@ -8,7 +8,6 @@ export default function Message({ navigation, route }) {
     const [contact, setContact] = useState(route.params)
     //let contact = route.params;
     if (contact.isNanny == undefined) {
-        debugger
         traerUsuario(contact._id)
     }
     async function traerUsuario(id) {
@@ -25,8 +24,6 @@ export default function Message({ navigation, route }) {
         let urlApi = URL + api
         try {
             const data = await fetch(urlApi, request).then(resp => resp.json());
-            console.log(JSON.stringify(data));
-            debugger
             setContact(data);
         } catch (err) {
             console.error(err.message);
@@ -38,13 +35,11 @@ export default function Message({ navigation, route }) {
     let nombreNa;
 
     if (contact.isNanny) {
-        debugger
         idNanny = contact._id
         idUser = dataUsuario.usuario._id
         nombreNa = contact.nombre
         nombreUs = dataUsuario.usuario.nombre
     } else {
-        debugger
         idUser = contact._id
         idNanny = dataUsuario.usuario._id
         nombreUs = contact.nombre
@@ -86,12 +81,10 @@ export default function Message({ navigation, route }) {
             // e.date = e.date.substring(0,25);
             return e;
         })
-        console.log(nombres)
         setMensajes(nombres);
     }
 
     async function traerMensajes() {
-        debugger
         let URL = 'http://localhost:3000/messages/api/mensajes/';
         URL = URL + idUser + "/" + idNanny
         let headers = new Headers();
@@ -152,8 +145,7 @@ export default function Message({ navigation, route }) {
         }
         try {
             const data = await fetch(favoritosURLNanny, request).then(resp => resp.json());
-            console.log(JSON.stringify(data));
-            debugger
+            //console.log(JSON.stringify(data));
             if (dataUsuario.usuario.isNanny) {
                 dataUsuario.usuario = data;
                 setDataUsuario(dataUsuario)
@@ -174,8 +166,6 @@ export default function Message({ navigation, route }) {
         }
         try {
             const data = await fetch(favoritosURLUser, request).then(resp => resp.json());
-            console.log(JSON.stringify(data));
-            debugger
             if (!dataUsuario.usuario.isNanny) {
                 dataUsuario.usuario = data;
                 setDataUsuario(dataUsuario)
@@ -215,6 +205,14 @@ export default function Message({ navigation, route }) {
                         color="#ff7f50"
                     />
                 </View>
+                <View>
+                    <Button 
+                        onPress={() => navigation.navigate('Home')}
+                        title="Home"
+                        color="#008080"
+                        style={stylesPersonal.button2}
+                    />
+                </View>
             </View>
         </SafeAreaView>
     );
@@ -231,16 +229,28 @@ const stylesPersonal = StyleSheet.create({
         backgroundColor: "aliceblue", //aliceblue , beige
     },
     button: {
-        elevation: 8,
+        elevation: 5,
         minWidth: '35%',
         padding: 5,
         marginTop: 5,
         borderRadius: 10,
         paddingVertical: 5,
         paddingHorizontal: 5,
-        alignItems: 'center',
+        alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: '#6495ed' //cornflowerblue 
+    },
+    button2:{
+        elevation: 5,
+        minWidth: '35%',
+        padding: 5,
+        marginTop: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        alignContent: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#008080',
+        borderRadius:15
     },
     buttonContainer: {
         elevation: 8,

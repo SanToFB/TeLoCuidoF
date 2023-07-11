@@ -27,16 +27,18 @@ export default function DataProfile({ navigation, route }) {
             <Text style={styles.info}>Turnos: {turnos}</Text>
             <Text style={styles.info}>Dias disponible: {dias}</Text>
             <Text style={styles.info}>Mail de contacto: {data.mail}</Text>
-            <Button style={styles.button}
-                onPress={() => goMessage()}
-                title="Enviar Mensaje"
-                color="#5f9ea0"
-            />
-            <Button style={styles.button}
-                onPress={ () => goBack()}
-                title="Volver"
-                color="#ff7f50"
-            />
+            <View style={styles.buttonContainer}>
+                <Button style={styles.button}
+                    onPress={() => goMessage()}
+                    title="Enviar Mensaje"
+                    color="#5f9ea0"
+                />
+                <Button style={styles.button}
+                    onPress={() => goBack()}
+                    title="Volver"
+                    color="#ff7f50"
+                />
+            </View>
         </View>
     );
 }
@@ -44,7 +46,7 @@ export default function DataProfile({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#778899',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -64,4 +66,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textTransform: "uppercase"
     },
+    buttonContainer:{
+        marginTop: 15,
+        padding:5,
+    }
 });

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { styles } from '../components/styles'
-import  asyncStorage  from '../services/asyncStorage';
+import asyncStorage from '../services/asyncStorage';
 import GlobalContext from '../components/global/context';
 
 export default function Home({ navigation, route }) {
@@ -9,15 +9,13 @@ export default function Home({ navigation, route }) {
     let { dataUsuario, setAuthenticated } = useContext(GlobalContext);
 
     useEffect(() => {
-        debugger
         console.log(dataUsuario.usuario.apellido)
         // showUserInfo()
         return () => {
-
         }
-    }, [])         
-    
-    function logOut(){
+    }, [])
+
+    function logOut() {
         asyncStorage.clearAll()
         setAuthenticated(false)
     }
@@ -35,12 +33,12 @@ export default function Home({ navigation, route }) {
             <View style={[styles.container, { backgroundColor: '#8fbc8f' }]}>
                 <View style={{ flexDirection: 'column' }}>
                     {dataUsuario.usuario.isNanny ? (
-                        <View style={{ flexDirection: 'row', textAlign: 'center' }}>
+                        <View>
                             <TouchableOpacity style={styles.buttonContainer}>
                                 <Text
                                     style={[styles.button2, { backgroundColor: '#1e90ff' }]}
-                                    onPress={() => navigation.navigate('Favoritos')}
-                                >Favoritos</Text>
+                                    onPress={() => navigation.navigate('Profile')}
+                                >Perfil</Text>
                             </TouchableOpacity>
                         </View>
                     ) : (
@@ -54,34 +52,21 @@ export default function Home({ navigation, route }) {
                             <TouchableOpacity style={styles.buttonContainer}>
                                 <Text
                                     style={[styles.button2, { backgroundColor: '#1e90ff' }]}
-                                    onPress={() => navigation.navigate('Favoritos')}
-                                >Favoritos</Text>
+                                    onPress={() => navigation.navigate('Profile')}
+                                >Perfil</Text>
                             </TouchableOpacity>
                         </View>
                     )}
-                    < View style={{ flexDirection: 'row', textAlign: 'center' }}>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text
-                            style={[styles.button2, { backgroundColor: '#b22222' }]}
-                            onPress={() => logOut()}
-                        >Logout</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text
-                            style={[styles.button2, { backgroundColor: '#1e90ff' }]}
-                            onPress={() => navigation.navigate('Profile')}
-                        >Perfil</Text>
-                    </TouchableOpacity>
-
+                    < View style={{ textAlign: 'center' }}>
+                        <TouchableOpacity style={styles.buttonContainer}>
+                            <Text
+                                style={[styles.button2, { backgroundColor: '#b22222' }]}
+                                onPress={() => logOut()}
+                            >Logout</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <Button style={styles.button}
-                    onPress={() => navigation.goBack()}
-                    title="Volver"
-                    color="#ff7f50"
-                />
-
             </View>
-        </View>
         </View >
     );
 }
@@ -94,7 +79,7 @@ const personalStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     button: {
-        elevation: 8,
+        elevation: 5,
         minWidth: '40%',
         padding: 5,
         marginTop: 15,
@@ -102,6 +87,6 @@ const personalStyles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 1,
         paddingHorizontal: 10,
-        backgroundColor: '#00ffff' //`#f0f8ff` //aliceblue
+        backgroundColor: '#00ffff' 
     },
 });

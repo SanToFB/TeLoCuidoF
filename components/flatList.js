@@ -31,21 +31,21 @@ export default function FlatListNannies({ nannies, navigation, page }) {
                 data={nannies}
                 renderItem={({ item }) => <Item item={item} />}
                 keyExtractor={(item) => item._id.toString()}
-                ItemSeparatorComponent={() => "--------------"}
+                ItemSeparatorComponent={() => "---------------------------------------"}
             />
         </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        padding: 3,
+        padding: 2,
     },
     item: {
-        padding: 15,
-        marginVertical: 5,
+        padding: 5,
+        marginVertical: 2,
         marginHorizontal: 5,
     },
     title: {
-        fontSize: 16,
+        fontSize: 13,
     },
 });

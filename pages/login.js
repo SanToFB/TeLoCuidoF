@@ -30,7 +30,6 @@ export default function Login({navigation}) {
             headers: headers,
             body: JSON.stringify({ mail: mail, password: password })
         }
-        console.log(request.body)
         try {
             const data = await fetch(URL, request).then(resp => resp.json());
             asyncStorage.storeData('dataUsuario', data);

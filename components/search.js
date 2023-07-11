@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-na
 import FlatListNannies from './flatList';
 
 const page = 'Search'
-export default function Search({navigation}) {
+export default function Search({ navigation }) {
   const URL = 'http://localhost:3000/nannies/api/'
 
   const [param1, setParam1] = useState('');
@@ -129,11 +129,8 @@ export default function Search({navigation}) {
           </View>
         </View>
       ) : (
-        <View>
-
-        </View>
+        <View> </View>
       )}
-
       <View>
         <TouchableOpacity style={styles.buttonContainer}>
           <Text
@@ -144,7 +141,7 @@ export default function Search({navigation}) {
 
       </View>
       <SafeAreaView>
-        <FlatListNannies nannies={data} navigation={navigation} page={page}/>
+        <FlatListNannies nannies={data} navigation={navigation} page={page} />
       </SafeAreaView>
     </View>
   )
@@ -154,7 +151,7 @@ export default function Search({navigation}) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 8,
-    backgroundColor: 'aliceblue',
+    backgroundColor: '#d3d3d3',
   },
   buttonContainer: {
     elevation: 8,

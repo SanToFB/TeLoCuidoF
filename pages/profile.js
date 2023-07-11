@@ -4,14 +4,14 @@ import GlobalContext from '../components/global/context';
 import FlatListNannies from '../components/flatList';
 
 const page = 'Profile'
+let user = {};
 export default function Profile({ navigation }) {
     const [selected, setSelected] = useState(false);
-    const { dataUsuario } = useContext(GlobalContext);
-    const [isEditar, setIsEditar] = useState(false)
+    const { dataUsuario, setDataUsuario } = useContext(GlobalContext);
+    const [isEditar, setIsEditar] = useState(false);
 
     let userType = (dataUsuario.usuario.isNanny) ? "Niñera" : "Usuario";
-    debugger
-   
+
     // let userTurnos = dataUsuario.usuario.turno.join(); para concat array si hay.
     const [ciudad, setCiudad] = useState(dataUsuario.usuario.ciudad);
     const [turno, setTurno] = useState(dataUsuario.usuario.turno);
@@ -20,7 +20,7 @@ export default function Profile({ navigation }) {
     const [favoritos, setFavoritos] = useState(dataUsuario.usuario.favoritos);
     const [cuidaMascotas, setCuidaMascotas] = useState(dataUsuario.usuario.cuidaMascotas);
     const [password, setPassword] = useState(dataUsuario.usuario.password);
-   
+
     function pasarArray(aSplitear) {
         return aSplitear.Split(",");
     }
@@ -28,9 +28,8 @@ export default function Profile({ navigation }) {
 
     async function editar() {
         let api = dataUsuario.usuario.isNanny ? 'nannies/api/nanny/' : 'users/api/user/';
-        api + dataUsuario.usuario._id
+        api += dataUsuario.usuario._id
         cargarUsuario();
-        debugger
         let headers = new Headers();
         headers.append("Content-type", "application/json");
         let request = {
@@ -41,35 +40,54 @@ export default function Profile({ navigation }) {
         let urlApi = URL + api;
         try {
             const datas = await fetch(urlApi, request).then(resp => resp.json());
-            console.log(JSON.stringify(datas));
-
         } catch (err) {
             console.error(err);
         }
     }
 
     function cargarUsuario() {
-        user.user.isNanny = dataUsuario.usuario.isNanny;
-        user.user.nombre = dataUsuario.usuario.nombre;
-        user.user.apellido = dataUsuario.usuario.apellido;
-        user.user.fecha_nacimiento = dataUsuario.usuario.fechaNacimiento;
-        user.user.dni = dataUsuario.usuario.dni;
-        user.user.ciudad = ciudad;
-        user.user.dias = dias;
-        user.user.turno = turno;
-        user.user.mail = mail;
-        user.user.password = password;
-        user.user.favoritos = dataUsuario.usuario.favoritos; 
-        if (dataUsuario.usuario.isNanny) {                 
-            user.user.cuidaMascotas = cuidaMascotas; 
-        }           //capaz puedo meter {item, onPress} y desde profile pasar eliminar y desde search navegar.
+        if (userType === 'Niñera') {
+            user = {
+                user: {
+                    isNanny: dataUsuario.usuario.isNanny,
+                    nombre: dataUsuario.usuario.nombre,
+                    apellido: dataUsuario.usuario.apellido,
+                    fecha_nacimiento: dataUsuario.usuario.fechaNacimiento,
+                    dni: dataUsuario.usuario.dni,
+                    ciudad: ciudad,
+                    dias: dias,
+                    turno: turno,
+                    mail: mail,
+                    passwor: password,
+                    favoritos: dataUsuario.usuario.favoritos,
+                    cuidaMascotas: cuidaMascotas
+                }
+            }
+        } else {
+            user = {
+                user: {
+                    isNanny: dataUsuario.usuario.isNanny,
+                    nombre: dataUsuario.usuario.nombre,
+                    apellido: dataUsuario.usuario.apellido,
+                    fecha_nacimiento: dataUsuario.usuario.fechaNacimiento,
+                    dni: dataUsuario.usuario.dni,
+                    ciudad: ciudad,
+                    dias: dias,
+                    turno: turno,
+                    mail: mail,
+                    passwor: password,
+                    favoritos: dataUsuario.usuario.favoritos,
+                }
+            }
+        }
+        //capaz puedo meter {item, onPress} y desde profile pasar eliminar y desde search navegar.
     }
 
 
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.info, {fontSize:16, fontWeight:'bold'}]}>{userType}</Text>
+                <Text style={[styles.info, { fontSize: 14, fontWeight: 'bold' }]}>{userType}</Text>
                 {(userType === "Niñera") ? (
                     <View>
                         <TouchableOpacity style={styles.buttonContainer}>
@@ -100,7 +118,7 @@ export default function Profile({ navigation }) {
                 />
             </View>
             <View>
-                <Text style={{fontSize:14, padding:8 }}>Al agregar mas de un turno / dias separar por ","</Text>
+                <Text style={{ fontSize: 14, padding: 8 }}>Al agregar mas de un turno / dias separar por ","</Text>
             </View>
             <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
                 <Text style={styles.info}> Turno: </Text>
@@ -152,6 +170,10 @@ export default function Profile({ navigation }) {
             </View>
             {favoritos ? (
                 <View>
+                    <Text style={[styles.info, {
+                        fontWeight: 'bold', alignContent: 'center', justifyContent: 'center',
+                        fontSize: 16
+                    }]}> Favoritos: </Text>
                     <FlatListNannies nannies={favoritos} navigation={navigation} page={page} />
                 </View>
             ) : (
@@ -162,7 +184,7 @@ export default function Profile({ navigation }) {
                 {isEditar === true ? (
                     <View>
                         <Button style={styles.button}
-                            onPress={editar()}
+                            onPress={() => editar()}
                             title="Editar"
                             color="#5f9ea0"
                         />
@@ -180,8 +202,7 @@ export default function Profile({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#b0c4de',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -189,20 +210,20 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         fontSize: 14,
         paddingHorizontal: 5,
-        paddingVertical: 5,
+        paddingVertical: 3,
         marginHorizontal: 5,
-        marginTop: 8,
+        marginTop: 5,
         minWidth: '20'
     },
     buttonContainer: {
-        elevation: 8,
+        elevation: 5,
         minWidth: '30%',
         borderRadius: 5,
         paddingVertical: 3,
         paddingHorizontal: 3
     },
     button: {
-        fontSize: 14,
+        fontSize: 12,
         paddingHorizontal: 3,
         paddingVertical: 3,
         borderRadius: 15,
@@ -214,7 +235,7 @@ const styles = StyleSheet.create({
         textTransform: "uppercase"
     },
     selected: {
-        fontSize: 14,
+        fontSize: 12,
         paddingHorizontal: 3,
         paddingVertical: 3,
         borderRadius: 15,
@@ -232,7 +253,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderRadius: 5,
         marginHorizontal: 15,
-        marginTop: 10,
+        marginTop: 8,
         minWidth: '20'
     },
 });
