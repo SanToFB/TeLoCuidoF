@@ -50,7 +50,8 @@ export default function HomeReduce({ navigation }) {
 
             <Button
                 title={'Logout'}
-                onPress={() => context. setAuthenticated(false)} />
+                onPress={() => context. setAuthenticated(false)}
+            />
 
         </View>
     );

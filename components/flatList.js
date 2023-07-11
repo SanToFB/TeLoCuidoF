@@ -1,44 +1,51 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Text, View } from 'react-native';
 
-export default function FlatListNannies({ nannies, navigation, route }) {
+export default function FlatListNannies({ nannies, navigation, page }) {
 
-    const Item = ({ item, onPress }) => (
-        <TouchableOpacity onPress={contactar(item._id)} style={styles.item}>
-            <Text style={styles.title}>{item.nombre} {item.apellido}</Text>
-        </TouchableOpacity>
+    //let page = route.params;
+    const Item = ({ item }) => (
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.item}>
+                <Text
+                    style={styles.title}
+                    onPress={() => navegar(item) }
+                >{item.nombre} {item.apellido}</Text>
+            </TouchableOpacity>
+        </View>
     );
 
-    function contactar(id) {
-       // navigation.navigate("Perfil", id)
-       console.log("hola")
+    function navegar(item){
+        debugger
+        if ( page === 'Search'){
+            navigation.navigate("DataProfile", item)
+        }
+        if ( page === 'Profile'){
+            navigation.navigate("Message", item)
+        }
     }
 
     return (
         <SafeAreaView>
             <FlatList
                 data={nannies}
-                renderItem={({ item }) => {
-                    return (<TouchableOpacity onPress={contactar(item._id)} style={styles.item}>
-                        <Text >{item.nombre} {item.apellido}</Text>
-                    </TouchableOpacity>
-                    )
-                }}
-                keyExtractor={item => item._id.toString()}
+                renderItem={({ item }) => <Item item={item} />}
+                keyExtractor={(item) => item._id.toString()}
+                ItemSeparatorComponent={() => "--------------"}
             />
         </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        padding: 3,
     },
     item: {
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+        padding: 15,
+        marginVertical: 5,
+        marginHorizontal: 5,
     },
     title: {
-        fontSize: 32,
+        fontSize: 16,
     },
 });

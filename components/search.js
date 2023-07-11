@@ -1,10 +1,10 @@
 import { Button } from '@rneui/themed';
 import React, { useState } from 'react';
-import { StyleSheet, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import FlatListNannies from './flatList';
 
-
-export default function Search() {
+const page = 'Search'
+export default function Search({navigation}) {
   const URL = 'http://localhost:3000/nannies/api/'
 
   const [param1, setParam1] = useState('');
@@ -28,6 +28,7 @@ export default function Search() {
     try {
       const datas = await fetch(urlApi, request).then(resp => resp.json());
       setData(datas)
+      debugger
       console.log(JSON.stringify(datas));
 
     } catch (err) {
@@ -146,18 +147,16 @@ export default function Search() {
         </TouchableOpacity>
 
       </View>
-
-      <FlatListNannies nannies={data}/>
+      <SafeAreaView>
+        <FlatListNannies nannies={data} navigation={navigation} page={page}/>
+      </SafeAreaView>
     </View>
   )
-
-
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginTop: 8,
     backgroundColor: 'aliceblue',
   },
@@ -210,7 +209,7 @@ const styles = StyleSheet.create({
     minWidth: 10,
     color: `#000000`,
   },
- 
+
 });
 
 //export default Search;

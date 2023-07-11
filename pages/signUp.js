@@ -1,12 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, TouchableOpacity, StyleSheet, Text, View, TextInput, } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import * as WebBroser from 'expo-web-browser'
-import * as Google from 'expo-auth-session/providers/google'
-import /*{dataUsuario, DataContext}*/GlobalContext from '../components/global/context';
-
-export default function SignUp() {
+export default function SignUp({ navigation }) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [isNanny, setIsNanny] = useState(false);
@@ -23,10 +18,7 @@ export default function SignUp() {
     const [selected1, setSelected1] = useState(false);
     const [selected2, setSelected2] = useState(false);
 
-
-
-
-    const URL = 'http://localhost:3000/nannies/api/'
+    const URL = 'http://localhost:3000/'
     let api = '';
     let user = {
         user: {
@@ -63,9 +55,8 @@ export default function SignUp() {
     }
 
     async function registrarse() {
-        api = isNanny ? 'nanny' : 'user';
+        api = isNanny ? 'nannies/api/nanny' : 'users/api/user';
         cargarUsuario();
-        debugger
         let headers = new Headers();
         headers.append("Content-type", "application/json");
         let request = {
@@ -77,12 +68,10 @@ export default function SignUp() {
         try {
             const datas = await fetch(urlApi, request).then(resp => resp.json());
             console.log(JSON.stringify(datas));
-
         } catch (err) {
             console.error(err);
         }
-
-        //navigation.navigate('Home');
+        navigation.navigate('Login');
     }
 
     return (
@@ -181,7 +170,6 @@ export default function SignUp() {
                         }
                     >Registrarse</Text>
                 </TouchableOpacity>
-
             </SafeAreaView>
         </View>
     )

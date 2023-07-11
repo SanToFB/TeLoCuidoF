@@ -1,99 +1,104 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
-import { Card, Icon } from '@rneui/themed';
+import { styles } from '../components/styles'
 
 import GlobalContext from '../components/global/context';
 import { TextInput } from 'react-native-web';
 
 export default function Home({ navigation, route }) {
 
-    const params = route.params || {};
-
-    const [nannies, setNannies] = useState([])
-
-    const nannies2 = [
-        {
-            nombre: "Nana",
-            apellido: "Fine",
-            id: 1
-        },
-        {
-            nombre: "Eva",
-            apellido: "Luna",
-            id:2
-        },
-
-    ]
+    const { dataUsuario } = useContext(GlobalContext);
 
     useEffect(() => {
-        // Aqui hacemos el llamado
-        console.log("***** Entramos al home y llamamos al servicio de nannies")
-        setNannies(nannies2);
-        /*
-        vehiculosService.getAll()
-        .then(data => {
-          //console.log("Vehiculos", data)
-          setVehiculos(data)
-        })
-        .catch(error => {
-          //TODO: 
-        })
-        */
-    }, [])
+        debugger
+        console.log(dataUsuario.usuario.apellido)
+        // showUserInfo()
+        return () => {
+
+        }
+    }, [])                                          //HACER BOTONES  LOGOUT, BUSCAR NNANYS , FAVORITOS , PERFIL
 
 
     return (
-
-
-        <View style={styles.container}>
-            <View>
-                <Text>Lista de Vehiculos</Text>
+        <View style={personalStyles.container}>
+            <View style={{ margin: 20, marginBottom: 20 }}>
+                <Text style={styles.text}> Bienvenido: </Text>
+                {dataUsuario.usuario.isNanny ?
+                    (<Text style={styles.text1}>Niñera {dataUsuario.usuario.nombre} {dataUsuario.usuario.apellido} </Text>) :
+                    (<Text style={styles.text1}>Usuario  {dataUsuario.usuario.nombre} {dataUsuario.usuario.apellido}</Text>)}
+                <Text style={styles.text1}> {dataUsuario.usuario.mail}</Text>
             </View>
-            <ScrollView>
-                <View>
-                    {nannies.map(nany => {
-                        return (
-                            <TouchableOpacity
-                                key={nany.id}
-                                onPress={() => navigation.navigate('about', {
-                                    id: nany.id
-                                })}
-
-                            >
-                                <Card>
-                                    <Card.Title>{nany.nombre}</Card.Title>
-                                    <Card.Divider />
-                                    <View>
-                                        <Text>{nany.apellido}</Text>
-                                    </View>
-                                    <View>
-                                        <TouchableOpacity>
-                                            <Icon name='delete' />
-                                        </TouchableOpacity>
-
-                                    </View>
-                                </Card>
+            <View style={[styles.container, { backgroundColor: '#8fbc8f' }]}>
+                <View style={{ flexDirection: 'column' }}>
+                    {dataUsuario.usuario.isNanny ? (
+                        <View style={{ flexDirection: 'row', textAlign: 'center' }}>
+                            <TouchableOpacity style={styles.buttonContainer}>
+                                <Text
+                                    style={[styles.button2, { backgroundColor: '#1e90ff' }]}
+                                    onPress={() => navigation.navigate('Favoritos')}
+                                >Favoritos</Text>
                             </TouchableOpacity>
-
-                        )
-                    })}
+                        </View>
+                    ) : (
+                        <View style={{ flexDirection: 'row', textAlign: 'center' }}>
+                            <TouchableOpacity style={styles.buttonContainer}>
+                                <Text
+                                    style={[styles.button2, { backgroundColor: '#1e90ff' }]}
+                                    onPress={() => navigation.navigate('Search')}
+                                >Buscar Nanny</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonContainer}>
+                                <Text
+                                    style={[styles.button2, { backgroundColor: '#1e90ff' }]}
+                                    onPress={() => navigation.navigate('Favoritos')}
+                                >Favoritos</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    < View style={{ flexDirection: 'row', textAlign: 'center' }}>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text
+                            style={[styles.button2, { backgroundColor: '#b22222' }]}
+                            onPress={() => context.setAuthenticated(false)}
+                        >Logout</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text
+                            style={[styles.button2, { backgroundColor: '#1e90ff' }]}
+                            onPress={() => navigation.navigate('Profile')}
+                        >Perfil</Text>
+                    </TouchableOpacity>
 
                 </View>
-            </ScrollView>
+                <Button style={styles.button}
+                    onPress={() => navigation.goBack()}
+                    title="Volver"
+                    color="#ff7f50"
+                />
 
-
-            <StatusBar style="auto" />
-
+            </View>
         </View>
+        </View >
     );
 }
 
-const styles = StyleSheet.create({
+const personalStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#8fbc8f',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    button: {
+        elevation: 8,
+        minWidth: '40%',
+        padding: 5,
+        marginTop: 15,
+        margin: 8,
+        borderRadius: 10,
+        paddingVertical: 1,
+        paddingHorizontal: 10,
+        backgroundColor: '#00ffff' //`#f0f8ff` //aliceblue
     },
 });

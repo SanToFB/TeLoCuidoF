@@ -8,19 +8,22 @@ const authData = {
 
 const dataUsuario = {
   token: '',
-  _id: '',
-  isNanny: null,
-  nombre: '',
-  apellido: '',
-  fecha_nacimiento: null,
-  ciudad: null,
-  dni: null,
-  turno: null,
-  dias: null,
-  mail: null,
-  cuidaMascotas: null,
-  favoritos: null,
-  authenticated: false
+  usuario: {
+
+    _id: '',
+    isNanny: null,
+    nombre: '',
+    apellido: '',
+    fecha_nacimiento: null,
+    ciudad: null,
+    dni: null,
+    turno: null,
+    dias: null,
+    mail: null,
+    cuidaMascotas: null,
+    favoritos: null,
+  }
+  // authenticated: false
 }
 
 const DataContext = createContext(dataUsuario)
