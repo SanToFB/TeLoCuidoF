@@ -1,4 +1,3 @@
-import { Button } from '@rneui/themed';
 import React, { useState } from 'react';
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import FlatListNannies from './flatList';
@@ -28,9 +27,6 @@ export default function Search({navigation}) {
     try {
       const datas = await fetch(urlApi, request).then(resp => resp.json());
       setData(datas)
-      debugger
-      console.log(JSON.stringify(datas));
-
     } catch (err) {
       console.error(err.message);
     }
@@ -211,5 +207,3 @@ const styles = StyleSheet.create({
   },
 
 });
-
-//export default Search;

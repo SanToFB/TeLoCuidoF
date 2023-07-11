@@ -1,14 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect } from 'react';
 import { styles } from '../components/styles'
-
+import  asyncStorage  from '../services/asyncStorage';
 import GlobalContext from '../components/global/context';
-import { TextInput } from 'react-native-web';
 
 export default function Home({ navigation, route }) {
 
-    const { dataUsuario } = useContext(GlobalContext);
+    let { dataUsuario, setAuthenticated } = useContext(GlobalContext);
 
     useEffect(() => {
         debugger
@@ -17,7 +15,12 @@ export default function Home({ navigation, route }) {
         return () => {
 
         }
-    }, [])                                          //HACER BOTONES  LOGOUT, BUSCAR NNANYS , FAVORITOS , PERFIL
+    }, [])         
+    
+    function logOut(){
+        asyncStorage.clearAll()
+        setAuthenticated(false)
+    }
 
 
     return (
@@ -60,7 +63,7 @@ export default function Home({ navigation, route }) {
                     <TouchableOpacity style={styles.buttonContainer}>
                         <Text
                             style={[styles.button2, { backgroundColor: '#b22222' }]}
-                            onPress={() => context.setAuthenticated(false)}
+                            onPress={() => logOut()}
                         >Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonContainer}>

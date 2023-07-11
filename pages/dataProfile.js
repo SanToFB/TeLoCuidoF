@@ -1,19 +1,14 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
-import GlobalContext from '../components/global/context';
-
 
 export default function DataProfile({ navigation, route }) {
 
     let data = route.params;
-    debugger
     let cuida = data.cuidaMascotas ? "Si" : "No"
 
     let dias = '';
     data.dias.forEach((e) => dias += e + " ")
     let turnos = ''
     data.turno.forEach((e) => turnos += e + " ")
-    debugger
     function goMessage() {
         navigation.navigate('Message', data)
     }

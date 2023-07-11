@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import * as WebBroser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import GlobalContext from '../components/global/context';
+import asyncStorage from '../services/asyncStorage';
 
 WebBroser.maybeCompleteAuthSession();
 
@@ -32,33 +33,13 @@ export default function Login({navigation}) {
         console.log(request.body)
         try {
             const data = await fetch(URL, request).then(resp => resp.json());
-            //changeContext(data);
+            asyncStorage.storeData('dataUsuario', data);
             setAuthenticated(true);
             setDataUsuario(data)
-            //setUserInfo(data)
-            //applyAuthentication(data);
         } catch (err) {
             console.error(err.message);
         }
     }
-
-
-
-    /*function changeContext(data) {
-        GlobalContext.token = data.token;
-        GlobalContext.apellido = data.usuario.apellido;
-        GlobalContext.ciudad = data.usuario.ciudad;
-        GlobalContext._id = data.usuario._id;
-        GlobalContext.isNanny = data.usuario.isNanny;
-        GlobalContext.nombre = data.usuario.nombre;
-        GlobalContext.fecha_nacimiento = data.usuario.fecha_nacimiento;
-        GlobalContext.turno = data.usuario.turno;
-        GlobalContext.dni = data.usuario.dni;
-        GlobalContext.mail = data.usuario.mail;
-        GlobalContext.dias = data.usuario.dias;
-        GlobalContext.favoritos = data.usuario.favoritos;
-        GlobalContext.cuidaMascotas = data.usuario.cuidaMascotas;
-    }*/
 
     useEffect(() => {
         if (token != null) {
@@ -66,8 +47,7 @@ export default function Login({navigation}) {
         }
     }, [token]);
 
-
-    //expo auth google / https://docs.expo.dev/guides/google-authentication/
+    //Login con Google
     const [userInfo, setUserInfo] = useState(null);
 
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -78,7 +58,6 @@ export default function Login({navigation}) {
 
     useEffect(() => {
         if (response?.type === "success") {
-            debugger
             setToken(response.authentication.accessToken);
         }
     }, [response]);
@@ -94,7 +73,6 @@ export default function Login({navigation}) {
                 setUserInfo(data)
             })
         } catch (error) {
-            //agregar algun manejo de error
             console.log(error);
         }
     }
@@ -139,7 +117,6 @@ export default function Login({navigation}) {
             </View>
             {userInfo === null ? (
                 <View>
-
                     <View style={styles.container}>
                         <Text style={styles.text1}> Ingrese con Mail y Password: </Text>
                         <TouchableOpacity style={styles.buttonContainer}>
@@ -180,7 +157,7 @@ export default function Login({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    container: {   // flexDirection: row
+    container: {   
         flex: 1,
         marginTop: 25,
         backgroundColor: '#e0ffff',
@@ -287,12 +264,3 @@ const styles = StyleSheet.create({
 
 
 })
-
-/*
-const clienteAndroidExpo = '1058463615133-9d2faab499ouvcl9dfhj1qmolnos7cjf.apps.googleusercontent.com';
-const clienteAndroid = '1058463615133-b993p61uojeuc3p4q4o2594omd5j2g4h.apps.googleusercontent.com'
-const clienteIos = '1058463615133-bqetdft4e37gq4aj7o2q2jbjrfl0jchs.apps.googleusercontent.com'
-const clienteIosExpo = '1058463615133-gh5cjhhmt5jol4u0lmql63eo59pr8t50.apps.googleusercontent.com'
-const webClient = '1058463615133-sid329rj5gdmsoagha5ced30bhb9va75.apps.googleusercontent.com'
-const webSecret = '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'
-*/

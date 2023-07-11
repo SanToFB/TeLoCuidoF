@@ -1,17 +1,11 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
 import React, { useEffect, useState } from 'react';
-
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import Home from './pages/home';
 import Message from './pages/message';
 import Profile from './pages/profile';
 import Login from './pages/login';
 import SignUp from './pages/signUp';
-import Favorios from './pages/usuariosFavoritos';
 import Search from './components/search'
 import DataProfile from './pages/dataProfile'
 import AsyncStorage from './services/asyncStorage';
@@ -29,14 +23,11 @@ export default function App() {
 
   useEffect(() => {
     console.log("Traigo info usuario logueado")
-    debugger
     AsyncStorage.getData('dataUsuario')
       .then(data => {
         setDataUsuario(data)
-        console.log("Data " + data)
       })
       .catch(error => console.log("Error", error))
-      .finally(() => console.log("Si busco data"))
   }, [])
 
   const Stack = createNativeStackNavigator();

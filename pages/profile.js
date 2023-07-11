@@ -10,11 +10,8 @@ export default function Profile({ navigation }) {
     const [isEditar, setIsEditar] = useState(false)
 
     let userType = (dataUsuario.usuario.isNanny) ? "Niñera" : "Usuario";
-    const cuidaMasco = dataUsuario.usuario.cuidaMascotas;
-    if (cuidaMasco) {
-        setSelected(true)
-    }
-
+    debugger
+   
     // let userTurnos = dataUsuario.usuario.turno.join(); para concat array si hay.
     const [ciudad, setCiudad] = useState(dataUsuario.usuario.ciudad);
     const [turno, setTurno] = useState(dataUsuario.usuario.turno);
@@ -23,14 +20,14 @@ export default function Profile({ navigation }) {
     const [favoritos, setFavoritos] = useState(dataUsuario.usuario.favoritos);
     const [cuidaMascotas, setCuidaMascotas] = useState(dataUsuario.usuario.cuidaMascotas);
     const [password, setPassword] = useState(dataUsuario.usuario.password);
-    //falta password y favoritos
+   
     function pasarArray(aSplitear) {
         return aSplitear.Split(",");
     }
     const URL = 'http://localhost:3000/';
 
     async function editar() {
-        api = dataUsuario.usuario.isNanny ? 'nannies/api/nanny/' : 'users/api/user/';
+        let api = dataUsuario.usuario.isNanny ? 'nannies/api/nanny/' : 'users/api/user/';
         api + dataUsuario.usuario._id
         cargarUsuario();
         debugger
@@ -62,9 +59,9 @@ export default function Profile({ navigation }) {
         user.user.turno = turno;
         user.user.mail = mail;
         user.user.password = password;
-        user.user.favoritos = dataUsuario.usuario.favoritos; //Fav => Se agrega desde mensajes cuando ves tus converzaciones
-        if (dataUsuario.usuario.isNanny) {                  //Fav => Se eliminan desde la lista (FLATLIST => Hacer item2)
-            user.user.cuidaMascotas = cuidaMascotas; //para mostrar la info de favo y para poder eliminar. 
+        user.user.favoritos = dataUsuario.usuario.favoritos; 
+        if (dataUsuario.usuario.isNanny) {                 
+            user.user.cuidaMascotas = cuidaMascotas; 
         }           //capaz puedo meter {item, onPress} y desde profile pasar eliminar y desde search navegar.
     }
 
@@ -241,7 +238,3 @@ const styles = StyleSheet.create({
 });
 
 
-/*
-*   csantana@gmail.com
-*   abg-127
-*/

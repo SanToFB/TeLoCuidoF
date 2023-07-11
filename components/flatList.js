@@ -9,21 +9,21 @@ export default function FlatListNannies({ nannies, navigation, page }) {
             <TouchableOpacity style={styles.item}>
                 <Text
                     style={styles.title}
-                    onPress={() => navegar(item) }
+                    onPress={() => navegar(item)}
                 >{item.nombre} {item.apellido}</Text>
             </TouchableOpacity>
         </View>
     );
 
-    function navegar(item){
-        debugger
-        if ( page === 'Search'){
+    function navegar(item) {
+        if (page === 'Search') {
             navigation.navigate("DataProfile", item)
         }
-        if ( page === 'Profile'){
+        if (page === 'Profile') {
             navigation.navigate("Message", item)
         }
     }
+
 
     return (
         <SafeAreaView>
